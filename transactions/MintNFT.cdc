@@ -1,11 +1,9 @@
 import Nanobash from 0xf8d6e0586b0a20c7
 
 transaction(recipientAddr: Address, pieceID: UInt64) {
-    // local variable for the admin reference
     let adminRef: &Nanobash.Admin
 
     prepare(acct: AuthAccount) {
-        // borrow a reference to the Admin resource in storage
         self.adminRef = acct.borrow<&Nanobash.Admin>(from: /storage/NanobashAdmin)!
     }
 
@@ -22,7 +20,5 @@ transaction(recipientAddr: Address, pieceID: UInt64) {
         log(piece.id)
 
         receiverRef.deposit(token: <-piece)
-
-        log("This ia a test")
     }
 }

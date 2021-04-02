@@ -8,8 +8,8 @@ pub contract Nanobash: NonFungibleToken {
     pub event ContractInitialized()
     pub event Withdraw(id: UInt64, from: Address?)
     pub event Deposit(id: UInt64, to: Address?)
-    pub event EditionMinted(id: UInt64, pieceID: UInt64, serialNumber: UInt64)
-    pub event PieceCreated(id: UInt64, metadata: {String: String})
+    pub event EditionMinted(editionID: UInt64, pieceID: UInt64, serialNumber: UInt64)
+    pub event PieceCreated(pieceID: UInt64, metadata: {String: String})
     
     pub resource Piece {
         pub let pieceID: UInt64
@@ -29,7 +29,7 @@ pub contract Nanobash: NonFungibleToken {
             self.numberMinted = 0
             self.locked = false
             Nanobash.nextPieceID = Nanobash.nextPieceID + (1 as UInt64)
-            emit PieceCreated(id: self.pieceID, metadata: self.metadata)
+            emit PieceCreated(pieceID: self.pieceID, metadata: self.metadata)
         }
 
         pub fun lock() {
@@ -40,7 +40,7 @@ pub contract Nanobash: NonFungibleToken {
 
         pub fun mintEdition(): @NFT {
             pre {
-                !self.locked: "Cannot add the piece to the Set after the set has been locked."
+                !self.locked: "Unable to mint an edition after the piece has been locked."
                 self.numberMinted < self.maxEditions: "Maximum editions minted."
             }
 
@@ -83,7 +83,7 @@ pub contract Nanobash: NonFungibleToken {
             Nanobash.totalSupply = Nanobash.totalSupply + (1 as UInt64)
             self.id = Nanobash.totalSupply
             self.data = EditionData(pieceID: pieceID, serialNumber: serialNumber)
-            emit EditionMinted(id: self.id, pieceID: pieceID, serialNumber: serialNumber)
+            emit EditionMinted(editionID: self.id, pieceID: pieceID, serialNumber: serialNumber)
         }
     }
 
@@ -102,10 +102,6 @@ pub contract Nanobash: NonFungibleToken {
             }
             
             return &Nanobash.pieces[pieceID] as &Piece
-        }
-
-        pub fun createNewAdmin(): @Admin {
-            return <-create Admin()
         }
     }
 
