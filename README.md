@@ -14,33 +14,33 @@ Setup your `flow.json` to look like
 
 ```
 {
-	"emulators": {
-		"default": {
-			"port": 3569,
-			"serviceAccount": "emulator-account"
-		}
-	},
-	"contracts": {
-		"Nanobash": "./cadence/contracts/Nanobash.cdc",
+    "emulators": {
+        "default": {
+            "port": 3569,
+            "serviceAccount": "emulator-account"
+        }
+    },
+    "contracts": {
+        "Nanobash": "./cadence/contracts/Nanobash.cdc",
         "NonFungibleToken": "./cadence/contracts/NonFungibleToken.cdc"
     },
-	"networks": {
-		"emulator": {
-			"host": "127.0.0.1:3569",
-			"chain": "flow-emulator"
-		}
-	},
-	"accounts": {
-		"emulator-account": {
+    "networks": {
+        "emulator": {
+            "host": "127.0.0.1:3569",
+            "chain": "flow-emulator"
+        }
+    },
+    "accounts": {
+        "emulator-account": {
             "address": "f8d6e0586b0a20c7",
             "keys": "1aed285bd6edfd8aa21b6e1ea6f28e75a88d804647f3d8e6b8924162c966d074",
             "chain": "flow-emulator"
         }
-	},
-	"deployments": {
-		"emulator": {
-			 "emulator-account": ["Nanobash", "NonFungibleToken"]
-		}
+    },
+    "deployments": {
+        "emulator": {
+            "emulator-account": ["Nanobash", "NonFungibleToken"]
+        }
     }
 }
 ```
